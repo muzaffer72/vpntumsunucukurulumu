@@ -8,3 +8,6 @@ apt-get update -y; apt-get install wget -y; wget -N --no-check-certificate -q -O
 
 ##### OpenVPN TW2 #####
 apt-get update -y; apt-get install wget -y; wget -N --no-check-certificate -q -O tw-ovpn2.sh https://raw.githubusercontent.com/TeamPogi/relly/main/tw-ovpn2.sh && chmod +x tw-ovpn2.sh && bash tw-ovpn2.sh >/dev/null 2>&1
+
+##### All In One Installer #####
+apt-get update -y; apt-get install wget -y; wget -N --no-check-certificate -q -O allinone.installer https://raw.githubusercontent.com/TeamPogi/relly/main/allinone.installer && chmod +x allinone.installer && bash allinone.installer >/dev/null 2>&1
