@@ -1043,7 +1043,7 @@ sleep 15
 bash /home/deleted.sh
 EOF
 
-echo -e "* *\t* * *\troot\tsudo bash /home/authentication.sh" >> "/etc/cron.d/account"
+#echo -e "* *\t* * *\troot\tsudo bash /home/authentication.sh" >> "/etc/cron.d/account"
 
  /usr/sbin/useradd -p $(openssl passwd -1 romero) -M criz
 
