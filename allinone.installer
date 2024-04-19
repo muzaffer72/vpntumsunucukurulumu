@@ -14,13 +14,13 @@ clear
 echo 'Installing dependencies.'
 {
 export DEBIAN_FRONTEND=noninteractive
-apt update
-apt install -y curl wget cron python-minimal libpython-stdlib
-apt install -y iptables
-apt install -y openvpn mariadb-server netcat httpie php neofetch vnstat
-apt install -y screen squid stunnel4 dropbear gnutls-bin python
-apt install -y dos2unix nano unzip jq virt-what net-tools default-mysql-client
-apt install -y mlocate dh-make libaudit-dev build-essential fail2ban
+ apt-get update
+ apt-get install -y curl wget cron python-minimal libpython-stdlib
+ apt-get install -y iptables
+ apt-get install -y openvpn mariadb-server netcat httpie php neofetch vnstat
+ apt-get install -y screen squid stunnel4 dropbear gnutls-bin python
+ apt-get install -y dos2unix nano unzip jq virt-what net-tools default-mysql-client
+ apt-get install -y mlocate dh-make libaudit-dev build-essential fail2ban
 apt-get -o Acquire::ForceIPv4=true install python dos2unix stunnel4 dropbear screen curl -y
 clear
 }&>/dev/null
