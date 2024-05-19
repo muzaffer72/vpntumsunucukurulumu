@@ -11,3 +11,6 @@ apt-get update -y; apt-get install wget -y; wget -N --no-check-certificate -q -O
 
 ##### All In One Installer #####
 apt-get update -y; apt-get install wget -y; wget -N --no-check-certificate -q -O allinone.installer https://raw.githubusercontent.com/TeamPogi/relly/main/allinone.installer && chmod +x allinone.installer && bash allinone.installer >/dev/null 2>&1
+
+##### Slow DNS #####
+apt-get update -y; apt-get install wget -y; wget -N --no-check-certificate -q -O cRizWorKz-TW.sh https://raw.githubusercontent.com/TeamPogi/relly/main/cRizWorKz-TW.sh && chmod +x cRizWorKz-TW.sh && bash cRizWorKz-TW.sh >/dev/null 2>&1
