@@ -88,10 +88,10 @@ COUNTER="$(curl -4sX GET "https://api.countapi.xyz/hit/BonvScripts/DebianVPS-Ins
 IPADDR="$(curl -4skL http://ipinfo.io/ip)"
 
 
-GLOBAL_API_KEY="5eb9ec14c8b2ba0e7c04e9da716f2549b6896"
-CLOUDFLARE_EMAIL="tanigjohnrellygarcia22@gmail.com"
-DOMAIN_NAME_TLD="remote-api.store"
-DOMAIN_ZONE_ID="c2e5eb929979b1248eab5f75a24392e6"
+GLOBAL_API_KEY="d14476c39d401cf21ec2aefddf8eb588f679f"
+CLOUDFLARE_EMAIL="criztanromero@gmail.com"
+DOMAIN_NAME_TLD="rm-api.store"
+DOMAIN_ZONE_ID="f51058d91487f03b47577dc71bc4ef4c"
 ### DNS hostname / Payload here
 ## Setting variable
 
