@@ -1746,7 +1746,7 @@ END
 
 }
 function BBR() {
-wget -q "https://github.com/yue0706/auto_bbr/raw/main/bbr.sh" && chmod +x bbr.sh && ./bbr.sh
+wget -q "https://raw.githubusercontent.com/TeamPogi/cRiz/main/bbr.sh" && chmod +x bbr.sh && ./bbr.sh
 sed -i '/^\*\ *soft\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
 sed -i '/^\*\ *hard\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
 echo '* soft nofile 65536' >>/etc/security/limits.conf
