@@ -83,8 +83,8 @@ MyVPS_Time='Asia/Manila'
 [[ ! "$(command -v curl)" ]] && apt install curl -y -qq
 [[ ! "$(command -v jq)" ]] && apt install jq -y -qq
 ### CounterAPI update URL
-##COUNTER="$(curl -4sX GET "https://raw.githubusercontent.com/TeamPogi/cRiz/main/DebianVPS-Installer" | jq -r '.value')"
-COUNTER="$(curl -4sX GET "https://raw.githubusercontent.com/TeamPogi/cRiz/main/UbuntuVPS-Installer" | jq -r '.value')"
+COUNTER="$(curl -4sX GET "https://raw.githubusercontent.com/TeamPogi/cRiz/main/DebianVPS-Installer" | jq -r '.value')"
+#COUNTER="$(curl -4sX GET "https://raw.githubusercontent.com/TeamPogi/cRiz/main/UbuntuVPS-Installer" | jq -r '.value')"
 
 IPADDR="$(curl -4skL http://ipinfo.io/ip)"
 
