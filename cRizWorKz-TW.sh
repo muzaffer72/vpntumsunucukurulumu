@@ -746,7 +746,7 @@ fi
 
  # Pulling OpenVPN no internet fixer script
  #wget -qO /etc/openvpn/openvpn.bash "https://raw.githubusercontent.com/Bonveio/BonvScripts/master/openvpn.bash"
- #0chmod +x /etc/openvpn/openvpn.bash
+ #chmod +x /etc/openvpn/openvpn.bash
 }
 
 function InsProxy(){
@@ -760,7 +760,8 @@ confdir /etc/privoxy
 logdir /var/log/privoxy
 filterfile default.filter
 logfile logfile
-listen-address  0.0.0.0:8080
+listen-address  0.0.0.0:Privoxy_Port1
+listen-address  0.0.0.0:Privoxy_Port2
 toggle  1
 enable-remote-toggle  0
 enable-remote-http-toggle  0
