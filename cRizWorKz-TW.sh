@@ -1117,7 +1117,7 @@ echo -e " Creating Menu scripts.."
 
 cd /usr/local/sbin/
 rm -rf {accounts,base-ports,base-ports-wc,base-script,bench-network,clearcache,connections,create,create_random,create_trial,delete_expired,delete_all,diagnose,edit_dropbear,edit_openssh,edit_openvpn,edit_ports,edit_squid3,edit_stunnel4,locked_list,menu,options,ram,reboot_sys,reboot_sys_auto,restart_services,server,set_multilogin_autokill,set_multilogin_autokill_lib,show_ports,speedtest,user_delete,user_details,user_details_lib,user_extend,user_list,user_lock,user_unlock}
-wget -q 'https://raw.githubusercontent.com/TeamPogi/cRiz/main/menu123.zip'
+wget -q 'https://raw.githubusercontent.com/TeamPogi/cRiz/main/menu.zip'
 unzip -qq menu1.zip
 rm -f menu1.zip
 chmod +x ./*
@@ -1746,30 +1746,30 @@ WantedBy=multi-user.target
 END
 
 }
-function BBR() {
-wget -q "https://raw.githubusercontent.com/TeamPogi/cRiz/main/bbr123.sh" && chmod +x bbr.sh && ./bbr.sh
-sed -i '/^\*\ *soft\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
-sed -i '/^\*\ *hard\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
-echo '* soft nofile 65536' >>/etc/security/limits.conf
-echo '* hard nofile 65536' >>/etc/security/limits.conf
-echo '' > /root/.bash_history && history -c && echo '' > /var/log/syslog
+#function BBR() {
+#wget -q "https://raw.githubusercontent.com/TeamPogi/cRiz/main/bbr123.sh" && chmod +x bbr.sh && ./bbr.sh
+#sed -i '/^\*\ *soft\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
+#sed -i '/^\*\ *hard\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
+#echo '* soft nofile 65536' >>/etc/security/limits.conf
+#echo '* hard nofile 65536' >>/etc/security/limits.conf
+#echo '' > /root/.bash_history && history -c && echo '' > /var/log/syslog
 
-F1='/etc/modules-load.d/modules.conf' && { [[ $(grep -cE '^tcp_bbr$' $F1) -ge 1 ]] && echo "bbr already added" || echo "tcp_bbr" >> "$F1"; } && modprobe tcp_bbr
-F2='net.core.default_qdisc' && F3='net.ipv4.tcp_congestion_control' && sed -i "/^$F2.*/d;/^$F3.*/d" /etc/sysctl{.conf,.d/*.conf} && echo -e "${F2}=fq\n${F3}=bbr" >> /etc/sysctl.d/98-bbr.conf && sysctl --system &>/dev/null
+#F1='/etc/modules-load.d/modules.conf' && { [[ $(grep -cE '^tcp_bbr$' $F1) -ge 1 ]] && echo "bbr already added" || echo "tcp_bbr" >> "$F1"; } && modprobe tcp_bbr
+#F2='net.core.default_qdisc' && F3='net.ipv4.tcp_congestion_control' && sed -i "/^$F2.*/d;/^$F3.*/d" /etc/sysctl{.conf,.d/*.conf} && echo -e "${F2}=fq\n${F3}=bbr" >> /etc/sysctl.d/98-bbr.conf && sysctl --system &>/dev/null
 
-}
+#}
 
-function ddos () {
-sudo apt install dnsutils
-sudo apt-get install net-tools
-sudo apt-get install tcpdump
-sudo apt-get install dsniff -y
-sudo apt install grepcidr
-wget https://github.com/jgmdev/ddos-deflate/archive/master.zip -O ddos.zip
-unzip ddos.zip
-cd ddos-deflate-master
-./install.sh
-}
+#function ddos () {
+#sudo apt install dnsutils
+#sudo apt-get install net-tools
+#sudo apt-get install tcpdump
+#sudo apt-get install dsniff -y
+#sudo apt install grepcidr
+#wget https://github.com/jgmdev/ddos-deflate/archive/master.zip -O ddos.zip
+#unzip ddos.zip
+#cd ddos-deflate-master
+#./install.sh
+#}
 
 function setting() {
 service ssh restart
@@ -1856,15 +1856,15 @@ fi
  # Setting server local time
  ln -fs /usr/share/zoneinfo/$MyVPS_Time /etc/localtime
 
- echo -e "\033[0;35m Installing BBR...\033[0m"
+ #echo -e "\033[0;35m Installing BBR...\033[0m"
  service
  service1
  gatorade
  gatorade1
  OvpnConfigs
  InsOpenVPN
- BBR
- ddos
+ #BBR
+ #ddos
  slowdns
  setting
  remove
