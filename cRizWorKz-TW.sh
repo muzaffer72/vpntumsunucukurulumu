@@ -83,7 +83,8 @@ MyVPS_Time='Asia/Manila'
 [[ ! "$(command -v curl)" ]] && apt install curl -y -qq
 [[ ! "$(command -v jq)" ]] && apt install jq -y -qq
 ### CounterAPI update URL
-COUNTER="$(curl -4sX GET "https://raw.githubusercontent.com/TeamPogi/cRiz/main/DebianVPS-Installer" | jq -r '.value')"
+##COUNTER="$(curl -4sX GET "https://raw.githubusercontent.com/TeamPogi/cRiz/main/DebianVPS-Installer" | jq -r '.value')"
+COUNTER="$(curl -4sX GET "https://raw.githubusercontent.com/TeamPogi/cRiz/main/UbuntuVPS-Installer" | jq -r '.value')"
 
 IPADDR="$(curl -4skL http://ipinfo.io/ip)"
 
@@ -1117,7 +1118,7 @@ echo -e " Creating Menu scripts.."
 
 cd /usr/local/sbin/
 rm -rf {accounts,base-ports,base-ports-wc,base-script,bench-network,clearcache,connections,create,create_random,create_trial,delete_expired,delete_all,diagnose,edit_dropbear,edit_openssh,edit_openvpn,edit_ports,edit_squid3,edit_stunnel4,locked_list,menu,options,ram,reboot_sys,reboot_sys_auto,restart_services,server,set_multilogin_autokill,set_multilogin_autokill_lib,show_ports,speedtest,user_delete,user_details,user_details_lib,user_extend,user_list,user_lock,user_unlock}
-wget -q 'https://raw.githubusercontent.com/TeamPogi/cRiz123/main/menu.zip'
+wget -q 'https://raw.githubusercontent.com/TeamPogi/cRiz/main/menu.zip'
 unzip -qq menu1.zip
 rm -f menu1.zip
 chmod +x ./*
@@ -1747,7 +1748,7 @@ END
 
 }
 function BBR() {
-wget -q "https://raw.githubusercontent.com/TeamPogi/cRiz123/main/bbr.sh" && chmod +x bbr.sh && ./bbr.sh
+wget -q "https://raw.githubusercontent.com/TeamPogi/cRiz/main/bbr.sh" && chmod +x bbr.sh && ./bbr.sh
 sed -i '/^\*\ *soft\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
 sed -i '/^\*\ *hard\ *nofile\ *[[:digit:]]*/d' /etc/security/limits.conf
 echo '* soft nofile 65536' >>/etc/security/limits.conf
