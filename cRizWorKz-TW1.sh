@@ -16,7 +16,7 @@ if [[ $EUID -ne 0 ]];then
  exit 1
 fi
 
-MyScriptName='cRizWorKz-TW.sh'
+MyScriptName='cRizWorKz-TW1.sh'
 
 #Slowdns Port
 Slow_ssh='2222'
