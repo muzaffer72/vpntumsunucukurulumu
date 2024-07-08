@@ -609,7 +609,7 @@ echo '{
   "up_mbps": 100,
   "down_mbps": 100,
   "disable_udp": false,
-  "obfs": "boy",
+  "obfs": "hw",
   "auth": {
     "mode": "external",
     "config": {
