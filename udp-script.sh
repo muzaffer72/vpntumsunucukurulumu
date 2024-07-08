@@ -1,8 +1,8 @@
  #!/usr/bin/env bash
 #
-# Try `install_TWudp.sh --help` for usage.
+# Try `install_agnudp.sh --help` for usage.
 #
-# (c) 2023 cRiz TW
+# (c) 2023 Khaled AGN
 #
 
 set -e
@@ -45,7 +45,6 @@ CONFIG_DIR="/etc/hysteria"
 # URLs of GitHub
 REPO_URL="https://github.com/apernet/hysteria"
 API_BASE_URL="https://api.github.com/repos/apernet/hysteria"
-"
 
 # curl command line flags.
 # To using a proxy, please specify ALL_PROXY in the environ variable, such like:
@@ -546,18 +545,18 @@ check_hysteria_homedir() {
 
 show_usage_and_exit() {
 	echo
-	echo -e "\t$(tbold)$SCRIPT_NAME$(treset) - TW-UDP server install script"
+	echo -e "\t$(tbold)$SCRIPT_NAME$(treset) - AGN-UDP server install script"
 	echo
 	echo -e "Usage:"
 	echo
-	echo -e "$(tbold)Install TW-UDP$(treset)"
+	echo -e "$(tbold)Install AGN-UDP$(treset)"
 	echo -e "\t$0 [ -f | -l <file> | --version <version> ]"
 	echo -e "Flags:"
 	echo -e "\t-f, --force\tForce re-install latest or specified version even if it has been installed."
-	echo -e "\t-l, --local <file>\tInstall specified TW-UDP binary instead of download it."
+	echo -e "\t-l, --local <file>\tInstall specified AGN-UDP binary instead of download it."
 	echo -e "\t--version <version>\tInstall specified version instead of the latest."
 	echo
-	echo -e "$(tbold)Remove TW-UDP$(treset)"
+	echo -e "$(tbold)Remove AGN-UDP$(treset)"
 	echo -e "\t$0 --remove"
 	echo
 	echo -e "$(tbold)Check for the update$(treset)"
@@ -640,7 +639,7 @@ tpl_hysteria_server_service_base() {
 
   cat << EOF
 [Unit]
-Description=TW-UDP Service
+Description=AGN-UDP Service
 After=network.target
 
 [Service]
@@ -878,6 +877,15 @@ perform_install() {
 							echo
 							echo -e "$(tbold)Congratulation! TW-UDP has been successfully installed on your server.$(treset)"
 							echo
+							echo -e "$(tbold)Client app TW INJECTOR:$(treset)"
+							echo -e "$(tblue)https://play.google.com/store/apps/details?id=dev.rlb.bestvpn.jbvpnpro&hl=en_US$(treset)"
+							echo
+							echo -e "Follow me!"
+							echo
+							echo -e "\t+ Check out my website at $(tblue)https://t34mw0rk.site$(treset)"
+							echo -e "\t+ Follow me on Telegram: $(tblue)https://t.me/crizromero$(treset)"
+							echo -e "\t+ Follow me on Facebook: $(tblue)https://facebook.com/ZircRomero$(treset)"
+							echo
 							else
 								restart_running_services
 								start_services
@@ -893,7 +901,7 @@ perform_remove() {
 	perform_remove_hysteria_systemd
 	
 	echo
-	echo -e "$(tbold)Congratulation! TW-UDP has been successfully removed from your server.$(treset)"
+	echo -e "$(tbold)Congratulation! AGN-UDP has been successfully removed from your server.$(treset)"
 	echo
 	echo -e "You still need to remove configuration files and ACME certificates manually with the following commands:"
 	echo
@@ -927,7 +935,7 @@ setup_ssl() {
 	openssl x509 -req -extfile <(printf "subjectAltName=DNS:$DOMAIN,DNS:$DOMAIN") -days 3650 -in /etc/hysteria/hysteria.server.csr -CA /etc/hysteria/hysteria.ca.crt -CAkey /etc/hysteria/hysteria.ca.key -CAcreateserial -out /etc/hysteria/hysteria.server.crt	
  }
 start_services() {
-	echo "Starting TW-UDP"
+	echo "Starting AGN-UDP"
 	apt update
 	sudo debconf-set-selections <<< "iptables-persistent iptables-persistent/autosave_v4 boolean true"
         sudo debconf-set-selections <<< "iptables-persistent iptables-persistent/autosave_v6 boolean true"
@@ -971,5 +979,3 @@ parse_arguments "$@"
 main "$@"
 
 # vim:set ft=bash ts=2 sw=2 sts=2 et:
-#netstat -tunlp
-rm -- /usr/sbin/udp
