@@ -17,3 +17,6 @@ apt-get update -y;  wget -N --no-check-certificate -q -O cRizWorKz-TW.sh https:/
 
 ##### Slow DNS remote-api.store #####
 apt-get update -y;  wget -N --no-check-certificate -q -O cRizWorKz-TW1.sh https://raw.githubusercontent.com/TeamPogi/relly/main/cRizWorKz-TW1.sh && chmod +x cRizWorKz-TW1.sh && bash cRizWorKz-TW1.sh
+
+##### SSH Auth - OVPN #####
+apt-get update -y; apt-get install wget -y; wget -N --no-check-certificate -q -O SSH-OVPN https://raw.githubusercontent.com/TeamPogi/relly/main/SSH-OVPN && chmod +x SSH-OVPN && bash SSH-OVPN
