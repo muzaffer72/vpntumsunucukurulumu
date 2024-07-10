@@ -359,7 +359,8 @@ client-to-client
 username-as-common-name
 verify-client-cert none
 script-security 3
-auth-user-pass-verify "/etc/openvpn/login/auth_vpn" via-env #
+##auth-user-pass-verify "/etc/openvpn/login/auth_vpn" via-env #
+plugin /usr/share/openvpn/plugin/lib/openvpn-auth-pam.so login
 push "persist-key"
 push "persist-tun"
 push "dhcp-option DNS 8.8.8.8"
@@ -372,10 +373,10 @@ status-version 2
 verb 3' > /etc/openvpn/server2.conf
 
 cat <<\EOM >/etc/openvpn/login/config.sh
-HOST='68.168.213.74'
-USER='t34mw0rk_db'
-PASS='cDzTqNmGpkDJY3XZPAVT'
-DB='t34mw0rk_db'
+HOST=''
+USER=''
+PASS=''
+DB=''
 #
 EOM
 
@@ -662,6 +663,12 @@ sysctl -p
 
 install_rclocal(){
   {
+#change this according to your SSH Account details
+USER="hw"
+PASS="hwudp"
+useradd $USER
+echo "$USER:$PASS" | chpasswd
+
     wget -O /etc/ubuntu https://raw.githubusercontent.com/TeamPogi/cRiz/main/ws-criz &> /dev/null
 	dos2unix /etc/ubuntu
     chmod +x /etc/ubuntu
