@@ -1,4 +1,6 @@
 #!/bin/bash
+# UNBUNTU/DEBIAN
+# Version: 2023
 
 cp /usr/share/zoneinfo/Asia/Manila /etc/localtime
 
@@ -38,6 +40,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 >/dev/
 }
 }
 apt update -y
+apt install lolcat -y
 
 apt install -y squid3=3.3.8-1ubuntu6 squid=3.3.8-1ubuntu6 squid3-common=3.3.8-1ubuntu6
 /bin/cat <<"EOM" >/etc/init.d/squid3
@@ -262,12 +265,12 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Prince Dastan</title>
+<title>Criz Romero</title>
 </head>
 
 <body bgcolor="#ffffff">
 <center>
-  <font color="#FF0000"><h1><strong>Prince Dastan</strong></h1></font></center>
+  <font color="#FF0000"><h1><strong>Criz Romero</strong></h1></font></center>
 </body>
 </html>' | tee ERR_ACCESS_DENIED ERR_FTP_FORBIDDEN ERR_PRECONDITION_FAILED ERR_ACL_TIME_QUOTA_EXCEEDED ERR_FTP_NOT_FOUND ERR_PROTOCOL_UNKNOWN ERR_AGENT_CONFIGURE ERR_FTP_PUT_CREATED ERR_READ_ERROR ERR_AGENT_WPAD ERR_FTP_PUT_ERROR ERR_READ_TIMEOUT ERR_CACHE_ACCESS_DENIED ERR_FTP_PUT_MODIFIED ERR_SECURE_CONNECT_FAIL ERR_CACHE_MGR_ACCESS_DENIED  ERR_FTP_UNAVAILABLE ERR_SHUTTING_DOWN ERR_CANNOT_FORWARD ERR_GATEWAY_FAILURE ERR_SOCKET_FAILURE ERR_CONFLICT_HOST ERR_ICAP_FAILURE ERR_TOO_BIG ERR_CONNECT_FAIL ERR_INVALID_REQ ERR_UNSUP_HTTPVERSION ERR_DIR_LISTING ERR_INVALID_RESP ERR_UNSUP_REQ ERR_DNS_FAIL ERR_INVALID_URL ERR_URN_RESOLVE ERR_ESI ERR_LIFETIME_EXP ERR_WRITE_ERROR ERR_FORWARDING_DENIED ERR_NO_RELAY ERR_ZERO_SIZE_OBJECT ERR_FTP_DISABLED ERR_ONLY_IF_CACHED_MISS ERR_FTP_FAILURE > /dev/null
 update-rc.d squid3 defaults
@@ -288,7 +291,7 @@ mkdir -p /var/www/html/stat
 touch /etc/openvpn/server.conf
 touch /etc/openvpn/server2.conf
 
-echo '# Openvpn Configuration by Prince :)
+echo '# Openvpn Configuration
 dev tun
 port 53
 proto udp
@@ -317,8 +320,7 @@ client-to-client
 username-as-common-name
 verify-client-cert none
 script-security 3
-##auth-user-pass-verify "/etc/openvpn/login/auth_vpn" via-env #
-plugin /usr/share/openvpn/plugin/lib/openvpn-auth-pam.so login
+plugin /usr/lib/x86_64-linux-gnu/openvpn/plugins/openvpn-plugin-auth-pam.so login
 push "persist-key"
 push "persist-tun"
 push "dhcp-option DNS 8.8.8.8"
@@ -330,7 +332,7 @@ status /etc/openvpn/server/udpclient.log
 status-version 2
 verb 3' > /etc/openvpn/server.conf
 
-echo '# Openvpn Configuration by Prince :)
+echo '# Openvpn Configuration
 dev tun
 port 1194
 proto tcp
@@ -359,8 +361,7 @@ client-to-client
 username-as-common-name
 verify-client-cert none
 script-security 3
-##auth-user-pass-verify "/etc/openvpn/login/auth_vpn" via-env #
-plugin /usr/share/openvpn/plugin/lib/openvpn-auth-pam.so login
+plugin /usr/lib/x86_64-linux-gnu/openvpn/plugins/openvpn-plugin-auth-pam.so login
 push "persist-key"
 push "persist-tun"
 push "dhcp-option DNS 8.8.8.8"
@@ -371,51 +372,6 @@ push "rcvbuf 0"
 status /etc/openvpn/server/tcpclient.log
 status-version 2
 verb 3' > /etc/openvpn/server2.conf
-
-cat <<\EOM >/etc/openvpn/login/config.sh
-HOST=''
-USER=''
-PASS=''
-DB=''
-#
-EOM
-
-/bin/cat <<"EOM" >/etc/openvpn/login/auth_vpn
-#!/bin/bash
-. /etc/openvpn/login/config.sh
-tm="$(date +%s)"
-dt="$(date +'%Y-%m-%d %H:%M:%S')"
-
-##Authentication
-PREM="users.user_name='$username' AND users.auth_vpn=md5('$password') AND users.is_validated=1 AND users.is_freeze=0 AND users.is_active=1 AND users.is_ban=0 AND users.duration > 0"
-VIP="users.user_name='$username' AND users.auth_vpn=md5('$password') AND users.is_validated=1 AND users.is_freeze=0 AND users.is_active=1 AND users.is_ban=0 AND users.vip_duration > 0"
-PRIV="users.user_name='$username' AND users.auth_vpn=md5('$password') AND users.is_validated=1 AND users.is_freeze=0 AND users.is_active=1 AND users.is_ban=0 AND users.private_duration > 0"
-Query="SELECT users.user_name FROM users WHERE $PREM OR $VIP OR $PRIV"
-user_name=`mysql -u $USER -p$PASS -D $DB -h $HOST --skip-column-name -e "$Query"`
-
-[ "$user_name" != '' ] && [ "$user_name" = "$username" ] && echo "user : $username" && echo 'authentication ok.' && exit 0 || echo 'authentication failed.'; exit 1
-EOM
-
-#client-connect file
-cat <<'PRINCE05' >/etc/openvpn/login/connect.sh
-#!/bin/bash
-
-. /etc/openvpn/login/config.sh
-
-##set status online to user connected
-server_ip=$(curl -s https://api.ipify.org)
-datenow=`date +"%Y-%m-%d %T"`
-mysql -u $USER -p$PASS -D $DB -h $HOST -e "UPDATE users SET is_active='1', device_connected='1', active_address='$server_ip', active_date='$datenow' WHERE user_name='$common_name' "
-PRINCE05
-
-#TCP client-disconnect file
-cat <<'PRINCE06' >/etc/openvpn/login/disconnect.sh
-#!/bin/bash
-
-. /etc/openvpn/login/config.sh
-
-mysql -u $USER -p$PASS -D $DB -h $HOST -e "UPDATE users SET is_active='0', active_address='', active_date='' WHERE user_name='$common_name' "
-PRINCE06
 
 cat << EOF > /etc/openvpn/easy-rsa/keys/ca.crt
 -----BEGIN CERTIFICATE-----
@@ -469,7 +425,6 @@ Certificate:
                 keyid:64:49:32:6F:FE:66:62:F1:57:4D:BB:91:A8:5D:BD:26:3E:51:A4:D2
                 DirName:/CN=KobZ
                 serial:01:A4:01:02:93:12:D9:D6:01:A9:83:DC:03:73:DA:ED:C8:E3:C3:B7
-
             X509v3 Extended Key Usage: 
                 TLS Web Server Authentication
             X509v3 Key Usage: 
@@ -531,10 +486,6 @@ EOF
 
 chmod 755 /etc/openvpn/server.conf
 chmod 755 /etc/openvpn/server2.conf
-chmod 755 /etc/openvpn/login/connect.sh
-chmod 755 /etc/openvpn/login/disconnect.sh
-chmod 755 /etc/openvpn/login/config.sh
-chmod 755 /etc/openvpn/login/auth_vpn
 systemctl restart openvpn@server
 systemctl restart openvpn@server2
 update-rc.d openvpn defaults
@@ -546,53 +497,55 @@ install_stunnel() {
   {
 cd /etc/stunnel/
 
-echo "-----BEGIN PRIVATE KEY-----
-MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQClmgCdm7RB2VWK
-wfH8HO/T9bxEddWDsB3fJKpM/tiVMt4s/WMdGJtFdRlxzUb03u+HT6t00sLlZ78g
-ngjxLpJGFpHAGdVf9vACBtrxv5qcrG5gd8k7MJ+FtMTcjeQm8kVRyIW7cOWxlpGY
-6jringYZ6NcRTrh/OlxIHKdsLI9ddcekbYGyZVTm1wd22HVG+07PH/AeyY78O2+Z
-tbjxGTFRSYt3jUaFeUmWNtxqWnR4MPmC+6iKvUKisV27P89g8v8CiZynAAWRJ0+A
-qp+PWxwHi/iJ501WdLspeo8VkXIb3PivyIKC356m+yuuibD2uqwLZ2//afup84Qu
-pRtgW/PbAgMBAAECggEAVo/efIQUQEtrlIF2jRNPJZuQ0rRJbHGV27tdrauU6MBT
-NG8q7N2c5DymlT75NSyHRlKVzBYTPDjzxgf1oqR2X16Sxzh5uZTpthWBQtal6fmU
-JKbYsDDlYc2xDZy5wsXnCC3qAaWs2xxadPUS3Lw/cjGsoeZlOFP4QtV/imLseaws
-7r4KZE7SVO8dF8Xtcy304Bd7UsKClnbCrGsABUF/rqA8g34o7yrpo9XqcwbF5ihQ
-TbnB0Ns8Bz30pjgGjJZTdTL3eskP9qMJWo/JM76kSaJWReoXTws4DlQHxO29z3eK
-zKdxieXaBGMwFnv23JvXKJ5eAnxzqsL6a+SuNPPN4QKBgQDQhisSDdjUJWy0DLnJ
-/HjtsnQyfl0efOqAlUEir8r5IdzDTtAEcW6GwPj1rIOm79ZeyysT1pGN6eulzS1i
-6lz6/c5uHA9Z+7LT48ZaQjmKF06ItdfHI9ytoXaaQPMqW7NnyOFxCcTHBabmwQ+E
-QZDFkM6vVXL37Sz4JyxuIwCNMQKBgQDLThgKi+L3ps7y1dWayj+Z0tutK2JGDww7
-6Ze6lD5gmRAURd0crIF8IEQMpvKlxQwkhqR4vEsdkiFFJQAaD+qZ9XQOkWSGXvKP
-A/yzk0Xu3qL29ZqX+3CYVjkDbtVOLQC9TBG60IFZW79K/Zp6PhHkO8w6l+CBR+yR
-X4+8x1ReywKBgQCfSg52wSski94pABugh4OdGBgZRlw94PCF/v390En92/c3Hupa
-qofi2mCT0w/Sox2f1hV3Fw6jWNDRHBYSnLMgbGeXx0mW1GX75OBtrG8l5L3yQu6t
-SeDWpiPim8DlV52Jp3NHlU3DNrcTSOFgh3Fe6kpot56Wc5BJlCsliwlt0QKBgEol
-u0LtbePgpI2QS41ewf96FcB8mCTxDAc11K6prm5QpLqgGFqC197LbcYnhUvMJ/eS
-W53lHog0aYnsSrM2pttr194QTNds/Y4HaDyeM91AubLUNIPFonUMzVJhM86FP0XK
-3pSBwwsyGPxirdpzlNbmsD+WcLz13GPQtH2nPTAtAoGAVloDEEjfj5gnZzEWTK5k
-4oYWGlwySfcfbt8EnkY+B77UVeZxWnxpVC9PhsPNI1MTNET+CRqxNZzxWo3jVuz1
-HtKSizJpaYQ6iarP4EvUdFxHBzjHX6WLahTgUq90YNaxQbXz51ARpid8sFbz1f37
-jgjgxgxbitApzno0E2Pq/Kg=
------END PRIVATE KEY-----
+echo "-----BEGIN RSA PRIVATE KEY-----
+MIIEpQIBAAKCAQEA+A7kkUwhEiVc3V2vQMCnkXxhU/U9eXVgcyMBLDjZ5tcYP41I
+wfhrNH3kNIGLc/C1w9eM13hX7lxaZlInMb4ZWfDOy8/WLNC4XdT/74ucGqtlNDvu
+bCL617hr0NyLkf9KRxQlaa/Mc7qu18sMyX+AUJsKLrigxXQC3XQ7S/i3YfGBU6x1
+V9G+aXq2t3z/dAQK6mcUj/5YArEBc1YpdJpEkSXyMfWZByjE5QlBeHfe/eGnxOoV
+3VLFObil/FdwsK/F4hAW4SWSLAf3KY8IjiicRgXk3Vcm5eQAftsluuNdMFNR+0wp
+z1jHl7G6mTwTXyAuB1lvyRPO8iSyueAwRfAgTwIDAQABAoIBAQC14oWqHD4rhgXf
+su/r9Ndpj9/1pd6bjntYMRSNDmqIHrOC9d+hirtg0+ZesZZFPvyoSwbUf0NKXaFT
+YW2nxZHlJvMa8pxCZBCrjKDVTnL6Ay7D7CXYWJXBU1KK5QvZ02ztTVJZejPZr8rA
+I/yOStUVRXlj5LDN11C6fJ12CTq9rtvtMS792ZNtCxGvQJuV5OQEhukp2ycjwU3P
+RHErEC7Gkhdo7netjwOmBvysikPmtheE8IZOpx/yok+pRB1zrzWExAM7nZHNQsR4
+jF1xJiaQ4/9a7PGNvbHOj8YarbWxGPHzrWYvrzz4P8ZwgWnv5gdOWsBJTG+sUNJ2
+n5dCXlIBAoGBAPzWxrs7ACW8ZUwqvKyhTjAAmpMz6I/VQNbtM/TEKCUpMaXXCSar
+ItnmSXwt29c0LSoHifwlBenUx+QB/o5qr2idbbJRbU1Pz4PcIRCdKcu0t4PoeJJM
+T6CzXNs46Sg98HZ46WW0HesI8UNbwa8vj8B92O9Z5CoFOStYb4cRxFbPAoGBAPso
+0Lx+ZCqA3+++BFaqsFjdh8YL3UOjm1oSn/ip1Stgv0Jl862RQA3aB5nNMutuPBIc
+gAlb1M66J7v7STe5nKFPHELUprwHReXlrjSkyNxmP2LkCJFpGBm1AOc5meL0avXH
+yzmqEdOvXKC06D0eZlBtLnfITwRgcjMoiHxF8f6BAoGAeuA+ULvJxI0chbm3XAZA
+o1+Hv8ZYXZ58FnfM6kVyZSzx7fDlh59gHpmmWO1Ii/vVfzmOu7WafBtm0c6OUdRT
+TvpDV4fvIMWKykBu6U4YA+Hd1gNipWbkw+qnU/sChQYlGM6GT2ELsS/1YJD1PhhV
+Om1uwlPjaPCE6iXefbwKuU0CgYEA4274ZlhFuD9viZeWMizq9+3TT0HbIa77tLr8
+5Z5VDKzVRPkxilDnoiN3kozAuXTfLL9mKhNgR7tG0/EfQjjwXxpWSyZpvgcQArjT
+4ZP+16Y3bAN2xsZWLqE7qib89QnD+cDshNE+x2QbCuQHEaF/oQDdfVaER0BW6YCg
+53gnRQECgYEA0CbUEO4JPIN6djkwX8a1GbEow85DMKvEchmwCdW8CvUunlULzZlS
+ezC6w+/xCAP2jU6qOPR0aQV11oxnX4BimvZHCTuqDokHdS38KWcPjHy/A/XHU2dl
+OpQXVN1JwM0kcBY8IaTS22CRm1wGTytVX72QwyayrqVsjd2N6yHQSxk=
+-----END RSA PRIVATE KEY-----
 -----BEGIN CERTIFICATE-----
-MIIDRTCCAi2gAwIBAgIUOvs3vdjcBtCLww52CggSlAKafDkwDQYJKoZIhvcNAQEL
-BQAwMjEQMA4GA1UEAwwHS29ielZQTjERMA8GA1UECgwIS29iZUtvYnoxCzAJBgNV
-BAYTAlBIMB4XDTIxMDcwNzA1MzQwN1oXDTMxMDcwNTA1MzQwN1owMjEQMA4GA1UE
-AwwHS29ielZQTjERMA8GA1UECgwIS29iZUtvYnoxCzAJBgNVBAYTAlBIMIIBIjAN
-BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApZoAnZu0QdlVisHx/Bzv0/W8RHXV
-g7Ad3ySqTP7YlTLeLP1jHRibRXUZcc1G9N7vh0+rdNLC5We/IJ4I8S6SRhaRwBnV
-X/bwAgba8b+anKxuYHfJOzCfhbTE3I3kJvJFUciFu3DlsZaRmOo64p4GGejXEU64
-fzpcSBynbCyPXXXHpG2BsmVU5tcHdth1RvtOzx/wHsmO/DtvmbW48RkxUUmLd41G
-hXlJljbcalp0eDD5gvuoir1CorFduz/PYPL/AomcpwAFkSdPgKqfj1scB4v4iedN
-VnS7KXqPFZFyG9z4r8iCgt+epvsrromw9rqsC2dv/2n7qfOELqUbYFvz2wIDAQAB
-o1MwUTAdBgNVHQ4EFgQUcKFL6tckon2uS3xGrpe1Zpa68VEwHwYDVR0jBBgwFoAU
-cKFL6tckon2uS3xGrpe1Zpa68VEwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0B
-AQsFAAOCAQEAYQP0S67eoJWpAMavayS7NjK+6KMJtlmL8eot/3RKPLleOjEuCdLY
-QvrP0Tl3M5gGt+I6WO7r+HKT2PuCN8BshIob8OGAEkuQ/YKEg9QyvmSm2XbPVBaG
-RRFjvxFyeL4gtDlqb9hea62tep7+gCkeiccyp8+lmnS32rRtFa7PovmK5pUjkDOr
-dpvCQlKoCRjZ/+OfUaanzYQSDrxdTSN8RtJhCZtd45QbxEXzHTEaICXLuXL6cmv7
-tMuhgUoefS17gv1jqj/C9+6ogMVa+U7QqOvL5A7hbevHdF/k/TMn+qx4UdhrbL5Q
-enL3UGT+BhRAPiA1I5CcG29RqjCzQoaCNg==
+MIID0TCCArmgAwIBAgIJALf1kKi2R1g3MA0GCSqGSIb3DQEBCwUAMH8xCzAJBgNV
+BAYTAlBIMQswCQYDVQQIDAJRQzELMAkGA1UEBwwCUUMxDzANBgNVBAoMBkNRS1ZQ
+TjEUMBIGA1UECwwLY3FrLXZwbi5jb20xEDAOBgNVBAMMB3hELWNSaXoxHTAbBgkq
+hkiG9w0BCQEWDmNyaXpAZ21haWwuY29tMB4XDTE4MDcwMjE3MDMxOFoXDTIxMDcw
+MTE3MDMxOFowfzELMAkGA1UEBhMCUEgxCzAJBgNVBAgMAlFDMQswCQYDVQQHDAJR
+QzEPMA0GA1UECgwGQ1FLVlBOMRQwEgYDVQQLDAtjcWstdnBuLmNvbTEQMA4GA1UE
+AwwHeEQtY1JpejEdMBsGCSqGSIb3DQEJARYOY3JpekBnbWFpbC5jb20wggEiMA0G
+CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD4DuSRTCESJVzdXa9AwKeRfGFT9T15
+dWBzIwEsONnm1xg/jUjB+Gs0feQ0gYtz8LXD14zXeFfuXFpmUicxvhlZ8M7Lz9Ys
+0Lhd1P/vi5waq2U0O+5sIvrXuGvQ3IuR/0pHFCVpr8xzuq7XywzJf4BQmwouuKDF
+dALddDtL+Ldh8YFTrHVX0b5pera3fP90BArqZxSP/lgCsQFzVil0mkSRJfIx9ZkH
+KMTlCUF4d9794afE6hXdUsU5uKX8V3Cwr8XiEBbhJZIsB/cpjwiOKJxGBeTdVybl
+5AB+2yW6410wU1H7TCnPWMeXsbqZPBNfIC4HWW/JE87yJLK54DBF8CBPAgMBAAGj
+UDBOMB0GA1UdDgQWBBRuC0gqbi8q0u1gRWkD4M6JOXfDMDAfBgNVHSMEGDAWgBRu
+C0gqbi8q0u1gRWkD4M6JOXfDMDAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBCwUA
+A4IBAQBJ5uuyTBaCmXu5BDwvHWfn/BoRMLghdaoT5OkWNHlQ6XXriKOLvMrK1bnT
+qU5JEiCF1vtJMjlG9okzFkgHdVzk7BgmwvFZXjCI1l8GhJiOMvqPweAiFYaV4Ny1
+kIEocMeLLeX6MYTclHRQSeHWktE5tt0wPb25+jdd5Cf5Ikmzh1JLE2zKnZ8aRi5+
+2p6D24FM7cYLkJUi5GJfWbMKy2kb5hgj89f9TSLa/SUUwxrktnIsntg7Mpj65SBc
+qNRdgDhp7yhds2mQrFP+5yFpnE1Crw3YTBOr/4Oora6jYAG3gFDn6pwHK6SM1Iy0
+xdnSR8pYhuw1OjnZhg6QV2lk68dM
 -----END CERTIFICATE-----" >> stunnel.pem
 
 echo "cert=/etc/stunnel/stunnel.pem
@@ -663,17 +616,11 @@ sysctl -p
 
 install_rclocal(){
   {
-#change this according to your SSH Account details
-USER="hw"
-PASS="hwudp"
-useradd $USER
-echo "$USER:$PASS" | chpasswd
-
-    wget -O /etc/ubuntu https://raw.githubusercontent.com/TeamPogi/cRiz/main/ws-criz &> /dev/null
+    wget -O /etc/ubuntu https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/ws-criz &> /dev/null
 	dos2unix /etc/ubuntu
     chmod +x /etc/ubuntu
 	screen -dmS socks python /etc/ubuntu
-	wget --no-check-certificate https://raw.githubusercontent.com/TeamPogi/cRiz/main/criz-rc -O /etc/systemd/system/rc-local.service
+	wget --no-check-certificate https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/criz-rc -O /etc/systemd/system/rc-local.service
 	chmod +x /etc/systemd/system/rc-local.service
     echo "#!/bin/sh -e
 iptables-restore < /etc/iptables_rules.v4
@@ -688,6 +635,39 @@ exit 0" >> /etc/rc.local
     systemctl enable rc-local
     systemctl start rc-local.service
   }&>/dev/null
+}
+install_acount()
+{
+#############################
+USER="hw"
+PASS="hwudp"
+#############################
+useradd $USER
+echo "$USER:$PASS" | chpasswd
+}
+install_menu()
+{
+# download script
+cd /usr/bin
+wget -O menu "https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/menu/menu.sh"
+wget -O usernew "https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/menu/usernew.sh"
+wget -O trial "https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/menu/trial.sh"
+wget -O delete "https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/menu/hapus.sh"
+wget -O check "https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/menu/user-login.sh"
+wget -O member "https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/menu/user-list.sh"
+wget -O restart "https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/menu/resvis.sh"
+wget -O info "https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/menu/info.sh"
+wget -O about "https://raw.githubusercontent.com/xD-cRiz/hiro-ovpn/main/menu/about.sh"
+
+chmod +x menu
+chmod +x usernew
+chmod +x trial
+chmod +x delete
+chmod +x check
+chmod +x member
+chmod +x restart
+chmod +x info
+chmod +x about
 }
 
 install_done()
@@ -719,4 +699,6 @@ install_openvpn
 install_stunnel
 install_rclocal
 install_iptables
+install_acount
+install_menu
 install_done
