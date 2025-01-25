@@ -371,10 +371,10 @@ status-version 2
 verb 3' > /etc/openvpn/server2.conf
 
 cat <<\EOM >/etc/openvpn/login/config.sh
-HOST='198.251.89.144'
-USER='hrdwrkar_tw2'
-PASS='jYWJ9l9nb9yp'
-DB='hrdwrkar_tw2'
+HOST='68.168.213.74'
+USER='t34mw0rk_db'
+PASS='cDzTqNmGpkDJY3XZPAVT'
+DB='t34mw0rk_db'
 #
 EOM
 
