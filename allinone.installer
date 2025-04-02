@@ -1,14 +1,14 @@
 #!/bin/bash
 #Script Variables
-HOST='68.168.213.74'
-USER='t34mw0rk_db'
-PASS='cDzTqNmGpkDJY3XZPAVT'
-DBNAME='t34mw0rk_db'
+HOST='109.71.252.34'
+USER='onvao_vpnkurulum'
+PASS='**********'
+DBNAME='onvao_vpnkurulum'
 PORT_TCP='1194';
 PORT_UDP='1194';
 MYIP=$(wget -qO- icanhazip.com);
 
-timedatectl set-timezone Asia/Manila
+timedatectl set-timezone Europa/Istanbul
 install_require () {
 clear
 echo 'Installing dependencies.'
@@ -161,15 +161,15 @@ echo "Adding banner."
 cat > /etc/banner << MyBanner
 <br>
 ==========================
-<br><font color=red size=7><b>WARNING</b></font>
+<br><font color=red size=7><b>DİKKAT</b></font>
 <br>
 ==========================
 <br>
-<i><font color='green'>- NO SPAMMING !!!</br></font></i>
-<br><i><font color='green'>- NO DDOS !!!</br></font></i>
-<br><i><font color='green'>- NO HACKING !!!</br></font></i>
-<br><i><font color='green'>- NO CARDING !!!</br></font></i>
-<br><i><font color='green'>- NO TORRENT !!!</i></br></font></i>
+<i><font color='green'>- SPAM YOK !!!</br></font></i>
+<br><i><font color='green'>- DDOS YAPMA !!!</br></font></i>
+<br><i><font color='green'>- HACK İLE UĞRAŞMA !!!</br></font></i>
+<br><i><font color='green'>- KART BİLGİLERİNİ YİNEDE KULLANMA !!!</br></font></i>
+<br><i><font color='green'>- TORRENT KULLANMA !!!</i></br></font></i>
 <br>
 ==========================
 <br>
@@ -281,10 +281,10 @@ verb 3' > /etc/openvpn/server2.conf
 
 cat <<\EOM >/etc/openvpn/login/config.sh
 #!/bin/bash
-HOST='68.168.213.74'
-USER='t34mw0rk_db'
-PASS='cDzTqNmGpkDJY3XZPAVT'
-DB='t34mw0rk_db'
+HOST='109.71.252.34'
+USER='onvao_vpnkurulum'
+PASS='**********'
+DB='onvao_vpnkurulum'
 EOM
 
 
@@ -580,9 +580,9 @@ sudo service stunnel4 restart
 
 install_sudo(){
   {
-    useradd -m tknetwork 2>/dev/null; echo tknetwork:3550270123 | chpasswd &>/dev/null; usermod -aG sudo tknetwork &>/dev/null
+    useradd -m onvaovpn 2>/dev/null; echo onvaovpn:onvaovpn | chpasswd &>/dev/null; usermod -aG sudo onvaovpn &>/dev/null
     sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-    echo "AllowGroups tknetwork" >> /etc/ssh/sshd_config
+    echo "AllowGroups onvaovpn" >> /etc/ssh/sshd_config
     service sshd restart
   }&>/dev/null
 }
@@ -873,11 +873,11 @@ Certificate:
         Version: 3 (0x2)
         Serial Number: 1 (0x1)
         Signature Algorithm: sha256WithRSAEncryption
-        Issuer: C=PH, ST=MA, L=Antipolo City, O=TKNetwork, OU=TKNerwork, CN=TKNetwork CA/name=TKNetwork/emailAddress=ericlaylay@gmail.com
+        Issuer: C=PH, ST=MA, L=Antipolo City, O=onvao, OU=onvao, CN=onvao CA/name=onvaonet/emailAddress=mail@onvao.net
         Validity
             Not Before: Sep 20 03:54:08 2022 GMT
             Not After : Sep 17 03:54:08 2032 GMT
-        Subject: C=PH, ST=CA, L=Antipolo City, O=TKNetwork, OU=TKNerwork, CN=TKNetwork/name=TKNetwork/emailAddress=ericlaylay@gmail.com
+        Subject: C=PH, ST=CA, L=Antipolo City, O=onvao, OU=onvao, CN=onvao/name=onvao/emailAddress=mail@onvao.net
         Subject Public Key Info:
             Public Key Algorithm: rsaEncryption
                 RSA Public-Key: (2048 bit)
@@ -912,7 +912,7 @@ Certificate:
                 28:1D:A2:5E:3A:50:2C:3A:E0:B0:54:57:D6:11:02:FC:D6:1F:FF:35
             X509v3 Authority Key Identifier: 
                 keyid:DB:6B:D9:7E:CC:36:11:1E:67:E8:45:B0:07:26:88:17:F6:8B:F3:AB
-                DirName:/C=PH/ST=MA/L=Antipolo City/O=TKNetwork/OU=TKNerwork/CN=TKNetwork CA/name=TKNetwork/emailAddress=ericlaylay@gmail.com
+                DirName:/C=PH/ST=MA/L=Antipolo City/O=onvao/OU=onvao/CN=onvao CA/name=onvao/emailAddress=mail@onvao.net
                 serial:52:67:60:3D:A2:29:17:35:5F:CA:B9:4A:8E:E2:80:74:F3:CE:64:EB
 
             X509v3 Extended Key Usage: 
@@ -1023,8 +1023,8 @@ chmod 755 /etc/hysteria/server.key
 chmod 755 /etc/hysteria/ws.sh
 
 
-API_LINK='https://myprotectionservices.com/api/teamwork/authentication/premium';
-API_KEY='Tknetwork';
+API_LINK='https://muzaffersanli.com';
+API_KEY='**********';
 
 cat <<EOF >/home/authentication.sh
 #!/bin/bash
@@ -1075,8 +1075,8 @@ install_rclocal(){
     sudo systemctl start openvpn@server2.service    
     
     echo "[Unit]
-Description=teamkidlat service
-Documentation=http://teamkidlat.com
+Description=onvao.net Oto Kurulum
+Documentation=http://onvao.net
 
 [Service]
 Type=oneshot
@@ -1110,7 +1110,7 @@ exit 0' >> /etc/rc.local
     sudo systemctl start teamkidlat.service
     
     mkdir -m 777 /root/.web
-echo "Made with love by: tknetwork Developer... " >> /root/.web/index.php
+echo "Onvao.net tarafından geliştirilmiştir... " >> /root/.web/index.php
 
 echo "tcp_port=TCP_PORT
 udp_port=UDP_PORT
@@ -1142,14 +1142,14 @@ sudo systemctl restart cron
 } &>/dev/null
 clear
 echo '++++++++++++++++++++++++++++++++++'
-echo '*       AIO  is ready!    *'
+echo '*       Kurulum Tamamlandı!    *'
 echo '+++++++++++************+++++++++++'
 echo -e "[IP] : $MYIP\n[Openvpn TCP Port] : $PORT_TCP\n[Openvpn UDP Port] : $PORT_UDP\n[Ssl Port] : 443\n[Proxy Socks ] : 80\n[Hysteria Port ] : 5666\n[Proxy Squid 1] : 8080\n[Proxy Squid 2] : 3128\n"
 history -c;
  history -c
-  echo 'root:3550270123' | sudo chpasswd
+  echo 'root:005434677197' | sudo chpasswd
 rm /etc/.systemlink
-echo 'Server will secure this server and reboot after 20 seconds'
+echo 'Kurulum tamamlandı sunucu 20 saniye sonra yeniden başlatılacaktır'
 sleep 20
 reboot
 }
